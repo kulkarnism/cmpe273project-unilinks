@@ -147,13 +147,13 @@ public class UniversityService
 		            			 
 		            			 
 		            			 String TO = emailid;
-	            		         String FROM = emailid;
+	            		         String FROM = "anita.tvl@gmail.com";
 	            		         String BODY = "This is auto generated email..Please do not reply...Please find the university details attached";
 	            		         String SUBJECT = "University Details";
 	            		         AmazonSimpleEmailService ses = new AmazonSimpleEmailServiceClient(credentials);
 	            		        // ses.verifyEmailAddress(new VerifyEmailAddressRequest().withEmailAddress(FROM));
 	            		         
-	            		         verifyEmailAddress(ses, FROM);
+	            		         verifyEmailAddress(ses, TO);
 	            		         
 	            		         Properties props = new Properties();
 	            		 		 props.setProperty("mail.transport.protocol", "aws");
