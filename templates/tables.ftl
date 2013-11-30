@@ -53,8 +53,10 @@ slideit()
  <table class="datatable" border="1" cellpadding="5">
  <#list universityObject as universityObject>
      <tr>
-     <th>SchoolName</th>
-     <th>ContactInfo</th>
+     <th>School Name</th>
+     <th>Contact Info</th>
+     <th>Location</th>
+     <th>Tuition Fees</th>
      <tr>
      <td>${universityObject.getSchoolName()}</td>
      <td>${universityObject.getContactInfo()}</td>   
