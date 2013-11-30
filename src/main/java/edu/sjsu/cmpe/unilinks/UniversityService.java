@@ -23,6 +23,9 @@ import spark.Request;
 import spark.Response;
 
 
+
+
+
 //import java.io.FileWriter;
 //import java.io.FileWriter;
 //import java.io.OutputStreamWriter;
@@ -42,6 +45,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import edu.sjsu.cmpe.unilinks.resources.DepartmentObject;
 import edu.sjsu.cmpe.unilinks.resources.SalaryDetails;
 import edu.sjsu.cmpe.unilinks.resources.UniversityObject;
 import edu.sjsu.cmpe.unilinks.resources.CareerDetails;
@@ -53,6 +57,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.simpleemail.AWSJavaMailTransport;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClient;
+import com.amazonaws.services.simpleemail.model.ListVerifiedEmailAddressesResult;
 import com.amazonaws.services.simpleemail.model.VerifyEmailAddressRequest;
 import com.amazonaws.services.sns.AmazonSNS;
 import com.amazonaws.services.sns.AmazonSNSClient;
@@ -85,6 +90,8 @@ public class UniversityService
 		final AmazonSNS sns = new AmazonSNSClient(credentials);	
 		final CareerDetails cd =  new CareerDetails();
         final SalaryDetails sd = new SalaryDetails();
+        final UniversityObject uo= new UniversityObject();
+        final DepartmentObject dObject=new DepartmentObject();
        
 	        String nextToken = null;
 	        int subscriptions = 0;
@@ -119,7 +126,7 @@ public class UniversityService
 		                  List<UniversityObject> universityObject = new ArrayList<UniversityObject>();
 		                  List<CareerDetails> careerDetails = new ArrayList<CareerDetails>();
 		                  List<SalaryDetails> salaryDetails = new ArrayList<SalaryDetails>();
-		                  
+		                  List<DepartmentObject> departmentObject = new ArrayList<DepartmentObject>();
 		                  
 		                  //Initialization
 		                  input.put("Hello","Welcome to CareerData");
@@ -140,13 +147,13 @@ public class UniversityService
 		            			 
 		            			 
 		            			 String TO = emailid;
-	            		         String FROM = "anita.tvl@gmail.com";
+	            		         String FROM = emailid;
 	            		         String BODY = "This is auto generated email..Please do not reply...Please find the university details attached";
 	            		         String SUBJECT = "University Details";
 	            		         AmazonSimpleEmailService ses = new AmazonSimpleEmailServiceClient(credentials);
-	            		         ses.verifyEmailAddress(new VerifyEmailAddressRequest().withEmailAddress(FROM));
+	            		        // ses.verifyEmailAddress(new VerifyEmailAddressRequest().withEmailAddress(FROM));
 	            		         
-	            		        
+	            		         verifyEmailAddress(ses, FROM);
 	            		         
 	            		         Properties props = new Properties();
 	            		 		 props.setProperty("mail.transport.protocol", "aws");
@@ -270,6 +277,21 @@ public class UniversityService
 		            			  BasicDBObject query = new BasicDBObject("SchoolName",name);
 		            			  DBCollection collection = db.getCollection("university");
 		            			  DBCollection collection_two = db.getCollection("salary");
+		            			  DBCollection collection_univInfo=db.getCollection("univinfo");
+		            			  //cursor for findign university data
+		            			  DBCursor dc_UnivInfo = collection_univInfo.find(query);
+		            			  System.out.println("dc_UnivInfo=="+dc_UnivInfo);
+		            			  while(dc_UnivInfo.hasNext())
+		            			  {
+		            				  DBObject univInfo = dc_UnivInfo.next();
+		            				  uo.setSchoolName(univInfo.get("SchoolName").toString());
+		            				  System.out.println(univInfo.get("SchoolName").toString());
+		            				  uo.setContactInfo(univInfo.get("contactInfo").toString());
+		            				  uo.setLocation(univInfo.get("location").toString());
+		            				  uo.setTutionFees(Integer.parseInt(univInfo.get("tutionFees").toString()));		            				  
+		            				  universityObject.add(uo);
+		            				  
+		            			  }
 		            			 //Cursor for finding salary
 		            			  DBCursor dc_two = collection_two.find(query);
 		            			  while(dc_two.hasNext())
@@ -386,7 +408,7 @@ public class UniversityService
 		            				 
 		            			 
 		            			
-		            			 	            			 
+		            			 input.put("universityObject",universityObject);           			 
 		            			 input.put("salaryDetails",salaryDetails);
 		            			 input.put("careerDetails",careerDetails);
 		                         template.process(input, file);
@@ -407,6 +429,14 @@ public class UniversityService
            
 	    }
 	
+	 private static void verifyEmailAddress(AmazonSimpleEmailService ses, String address) {
+	        ListVerifiedEmailAddressesResult verifiedEmails = ses.listVerifiedEmailAddresses();
+	        if (verifiedEmails.getVerifiedEmailAddresses().contains(address)) return;
+
+	        ses.verifyEmailAddress(new VerifyEmailAddressRequest().withEmailAddress(address));
+	        System.out.println("Please check the email address " + address + " to verify it");
+	        System.exit(0);
+	    }
 }
 
 
