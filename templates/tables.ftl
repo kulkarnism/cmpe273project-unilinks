@@ -1,6 +1,44 @@
 <#include "./header.ftl"> 
+
+<body><div class="background">
+ 			<!--added CSS-->
+            <link rel="stylesheet" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" media="screen">
+            <link href="//bootswatch.com/cerulean/bootstrap.min.css" rel="stylesheet">
+           
+           <!--script for slideshow-->
+           
+			<script>
+ var image1=new Image()
+image1.src="http://collegefootballzealots.com/images/stories/SJSU%20Logo.gif";
+var image2=new Image()
+image2.src="http://www.public.asu.edu/~pturaga/images/asu-logo.jpg";
+var image3=new Image()
+image3.src="http://www.harvard.edu/sites/default/files/user13/harvard_shield_wreath.png";
+      var step=1
+function slideit(){
+//if browser does not support the image object, exit.
+if (!document.images)
+return
+document.images.slide.src=eval("image"+step+".src")
+if (step<3)
+step++
+else
+step=1
+//call function "slideit()" every 2.5 seconds
+setTimeout("slideit()",5000)
+}
+slideit()
+			</script>
+            
+            
+            
+         
+            
+            
+            
 <#if container??>
   <div ="${container}">
+   
 <#else>
   <div ="default">
 </#if>
@@ -9,8 +47,24 @@
 <#if careerDetails?has_content>
 <h1><div align="center">Details of University</div></h1>
 <div ="input page">
+
 <div align="center">
+
  <table class="datatable" border="1" cellpadding="5">
+ <#list universityObject as universityObject>
+     <tr>
+     <th>SchoolName</th>
+     <th>ContactInfo</th>
+     <tr>
+     <td>${universityObject.getSchoolName()}</td>
+     <td>${universityObject.getContactInfo()}</td>   
+     <td>${universityObject.getLocation()}</td>   
+     <td>${universityObject.getTutionFees()}</td>       
+    </tr>    
+  </#list> 
+  </table>
+  <div class="table-responsive" align="center">
+  <table class="datatable" border="1" cellpadding="5">
  <#list careerDetails as careerDetails>
      <tr>
      <th>FirstName</th>
@@ -23,7 +77,8 @@
      <td>${careerDetails.getHeadline()}</td>
      <td>${careerDetails.getProfileURL()}</td>         
     </tr>    
-  </#list>   
+  </#list>  
+  </div> 
   <div id="chart_div" style="width: 900px; height: 500px;"></div>
   </table> 
   <table class="datatable" border="1" cellpadding="5">
@@ -49,6 +104,13 @@
   
 </div>
 <#else>
+
+<!--this can be removed later if not required-->
+<div ="images" align="right">
+<img id="img" name="slide" src="https://www.realmagnet.com/wp-content/uploads/2011/10/San-Jose-State-University.png" height="37" width="236" border="0px"/></div>
+</div>
+
+
 <div align="center"><img src="http://i41.tinypic.com/v5dao7.png"/></div></h1></font></div>
 <h3><div align ="center">All University Statics at One Click</div></h3>
 <h3><div align ="center">Enter the name or part of the name of the university you are looking for</div></h3>
@@ -99,4 +161,6 @@ var vten= parseInt(document.getElementById("ten").textContent);
 
 
 </form>
+</div>
+</body>
 <#include "./footer.ftl"> 
