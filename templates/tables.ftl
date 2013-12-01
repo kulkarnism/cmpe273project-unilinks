@@ -65,6 +65,23 @@ slideit()
     </tr>    
   </#list> 
   </table>
+  <!--Department table-->
+  <table class="datatable" border="1" cellpadding="5">
+  <tr>
+     <th>Department Name</th>
+     <th>Toefl Score</th>
+     <th>GRE score</th>
+     <th>IELTS score</th>
+     <tr>
+ <#list departmentObject as departmentObject>
+     
+     <td>${departmentObject.getDepartmentName()}</td>
+     <td>${departmentObject.getToeflscore()}</td>   
+     <td>${departmentObject.getGrescore()}</td>   
+     <td>${departmentObject.getIeltscore()}</td>       
+    </tr>    
+  </#list> 
+  </table>
   <div class="table-responsive" align="center">
   <table class="datatable" border="1" cellpadding="5">
  <#list careerDetails as careerDetails>
