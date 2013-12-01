@@ -19,7 +19,6 @@ public class UniversityObject {
     String SpringApplnDate;
     @JsonProperty("contactInfo")
     String contactInfo;
-    
     public int getId() {
     return _id;
     }
@@ -27,7 +26,8 @@ public class UniversityObject {
     this._id = id;
     }
     
-    public int getTutionFees() {
+
+	public int getTutionFees() {
     return tutionFees;
     }
     public void setTutionFees(int tutionFees) {
