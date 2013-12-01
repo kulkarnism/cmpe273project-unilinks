@@ -191,6 +191,10 @@ public class UniversityService
 			            			  BasicDBObject query = new BasicDBObject("SchoolName",u_name);			            			  
 			            			  DBCollection collection_two = db.getCollection("salary");
 			            			  DBCursor dc_two = collection_two.find(query);
+			            			  //get university data from database
+			            			  DBCollection collection_univInfo=db.getCollection("univinfo");
+			            			  DBCursor dc_UnivInfo = collection_univInfo.find(query);
+			            			  
 			            			  data.put("1",new Object[]{"Salary Details"});
 			            			  while(dc_two.hasNext())
 			            			  {
@@ -207,6 +211,16 @@ public class UniversityService
 			            				  data.put("92",new Object[]{"Civil Engineering(2012-13)::"+secondary.get("CVE2").toString()});
 			            			  }
 			            			  
+			            			  while(dc_UnivInfo.hasNext())
+			            			  {
+			            				  DBObject univInfo = dc_UnivInfo.next();
+			            				  data.put("11",new Object[]{"School Name:"+univInfo.get("SchoolName").toString()});
+			            				  data.put("12",new Object[]{"Contact Info:"+univInfo.get("contactInfo").toString()});
+			            				  data.put("13",new Object[]{"location:"+univInfo.get("location").toString()});
+			            				  data.put("14",new Object[]{"tutionFees:"+univInfo.get("tutionFees").toString()}); 
+			            				  System.out.println("department details==="+univInfo.get("department"));
+			            			  }
+			            			 
 	            		             //data.put("1",new Object[]{"hi"});
 	            		             //data.put("2",new Object[] {"UnivName"});
 	            		             
@@ -285,7 +299,6 @@ public class UniversityService
 		            			  {
 		            				  DBObject univInfo = dc_UnivInfo.next();
 		            				  uo.setSchoolName(univInfo.get("SchoolName").toString());
-		            				  System.out.println(univInfo.get("SchoolName").toString());
 		            				  uo.setContactInfo(univInfo.get("contactInfo").toString());
 		            				  uo.setLocation(univInfo.get("location").toString());
 		            				  uo.setTutionFees(Integer.parseInt(univInfo.get("tutionFees").toString()));		            				  
