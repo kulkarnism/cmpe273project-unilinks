@@ -26,6 +26,7 @@ import spark.Response;
 
 
 
+
 //import java.io.FileWriter;
 //import java.io.FileWriter;
 //import java.io.OutputStreamWriter;
@@ -301,9 +302,25 @@ public class UniversityService
 		            				  uo.setSchoolName(univInfo.get("SchoolName").toString());
 		            				  uo.setContactInfo(univInfo.get("contactInfo").toString());
 		            				  uo.setLocation(univInfo.get("location").toString());
-		            				  uo.setTutionFees(Integer.parseInt(univInfo.get("tutionFees").toString()));		            				  
-		            				  universityObject.add(uo);
-		            				  
+		            				  uo.setTutionFees(Integer.parseInt(univInfo.get("tutionFees").toString()));
+		            				  ArrayList<DepartmentObject> dept=new ArrayList<DepartmentObject>();
+		            				  dept=(ArrayList<DepartmentObject>) univInfo.get("department");
+		            				  uo.setDepartment(dept);
+		            				  universityObject.add(uo);  
+		            				 System.out.println("depat details"+uo.getDepartment());
+		            				 for(int i=0;i<uo.getDepartment().size();i++)
+		            				 {
+			            					System.out.println("uo.getDepartment().get(i).getDepartmentName()"+uo.getDepartment().get(i));
+			            					DBObject deptValues=(DBObject) uo.getDepartment().get(i);
+
+		            					dObject.setDepartmentName(deptValues.get("DepartmentName").toString());
+		            					dObject.setToeflscore(Integer.parseInt(deptValues.get("toeflscore").toString()));
+		            					dObject.setGrescore(Integer.parseInt(deptValues.get("grescore").toString()));
+		            					dObject.setIeltscore(Integer.parseInt(deptValues.get("ieltscore").toString()));
+		            					departmentObject.add(dObject);
+		            					System.out.println("added");
+		            				 }
+		            				 
 		            			  }
 		            			 //Cursor for finding salary
 		            			  DBCursor dc_two = collection_two.find(query);
@@ -424,6 +441,7 @@ public class UniversityService
 		            			 input.put("universityObject",universityObject);           			 
 		            			 input.put("salaryDetails",salaryDetails);
 		            			 input.put("careerDetails",careerDetails);
+		            			 input.put("departmentObject",departmentObject);
 		                         template.process(input, file);
 		                         
 		                         
