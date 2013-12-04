@@ -30,6 +30,8 @@ import spark.Response;
 
 
 
+
+
 //import java.io.FileWriter;
 //import java.io.FileWriter;
 //import java.io.OutputStreamWriter;
@@ -87,7 +89,7 @@ import javax.mail.internet.MimeMultipart;
 public class UniversityService
 {
         static String u_name = null;
-        static   ArrayList<DepartmentObject> departmentObject = new ArrayList<DepartmentObject>();
+          
         public static void main(String[] args) throws Exception
             { 
                 //Amazon SNS Subscription
@@ -131,7 +133,7 @@ public class UniversityService
                                   List<UniversityObject> universityObject = new ArrayList<UniversityObject>();
                                   List<CareerDetails> careerDetails = new ArrayList<CareerDetails>();
                                   List<SalaryDetails> salaryDetails = new ArrayList<SalaryDetails>();
-                                
+                                  ArrayList<DepartmentObject> departmentObject = new ArrayList<DepartmentObject>();
                                   
                                   //Initialization
                                   input.put("Hello","Welcome to CareerData");
@@ -185,7 +187,7 @@ public class UniversityService
                                                  HSSFWorkbook tmpWorkbook = new HSSFWorkbook();
                                                  HSSFSheet sheet = tmpWorkbook.createSheet("Sample sheet");
                                                  tmpWorkbook.write(new FileOutputStream(attachmentSource));
-                                                 Map<String, Object[]> data = new HashMap<String, Object[]>();
+                                                 Map<Integer, Object[]> data = new HashMap<Integer, Object[]>();
                                                  
                                                  //Get Salary Data From Database
                                                   String textUri = "mongodb://unilinks:unilinks@ds053818.mongolab.com:53818/unilinks";
@@ -200,38 +202,54 @@ public class UniversityService
                                                               DBCollection collection_univInfo=db.getCollection("univinfo");
                                                               DBCursor dc_UnivInfo = collection_univInfo.find(query);
                                                               
-                                                              data.put("1",new Object[]{"Salary Details"});
+                                                              data.put(1,new Object[]{"Salary Details"});
                                                               while(dc_two.hasNext())
                                                               {
                                                                       DBObject secondary = dc_two.next();
-                                                                      data.put("2",new Object[]{"Computer Engineering(2011-12)::"+secondary.get("CE").toString()});
-                                                                      data.put("3",new Object[]{"Computer Engineering(2012-13)::"+secondary.get("CE2").toString()});
-                                                                      data.put("4",new Object[]{"Software Engineering(2011-12)::"+secondary.get("SE").toString()});
-                                                                      data.put("5",new Object[]{"Software Engineering(2012-13)::"+secondary.get("SE2").toString()});
-                                                                      data.put("6",new Object[]{"Mechanical Engineering(2011-12)::"+secondary.get("ME").toString()});
-                                                                      data.put("7",new Object[]{"Mechanical Engineering(2012-13)::"+secondary.get("ME2").toString()});                                                                      
-                                                                      data.put("8",new Object[]{"Chemical Engineering(2011-12)::"+secondary.get("CHE").toString()});
-                                                                      data.put("9",new Object[]{"Chemical Engineering(2012-13)::"+secondary.get("CHE2").toString()});
-                                                                      data.put("91",new Object[]{"Civil Engineering(2011-12)::"+secondary.get("CVE").toString()});
-                                                                      data.put("92",new Object[]{"Civil Engineering(2012-13)::"+secondary.get("CVE2").toString()});
+                                                                      data.put(2,new Object[]{"Computer Engineering(2011-12)::"+secondary.get("CE").toString()});
+                                                                      data.put(3,new Object[]{"Computer Engineering(2012-13)::"+secondary.get("CE2").toString()});
+                                                                      data.put(4,new Object[]{"Software Engineering(2011-12)::"+secondary.get("SE").toString()});
+                                                                      data.put(5,new Object[]{"Software Engineering(2012-13)::"+secondary.get("SE2").toString()});
+                                                                      data.put(6,new Object[]{"Mechanical Engineering(2011-12)::"+secondary.get("ME").toString()});
+                                                                      data.put(7,new Object[]{"Mechanical Engineering(2012-13)::"+secondary.get("ME2").toString()});                                                                      
+                                                                      data.put(8,new Object[]{"Chemical Engineering(2011-12)::"+secondary.get("CHE").toString()});
+                                                                      data.put(9,new Object[]{"Chemical Engineering(2012-13)::"+secondary.get("CHE2").toString()});
+                                                                      data.put(10,new Object[]{"Civil Engineering(2011-12)::"+secondary.get("CVE").toString()});
+                                                                      data.put(11,new Object[]{"Civil Engineering(2012-13)::"+secondary.get("CVE2").toString()});
                                                               }
-                                                              
+                                                              BasicDBList deptInfoXls=new BasicDBList();
                                                               while(dc_UnivInfo.hasNext())
                                                               {
                                                                       DBObject univInfo = dc_UnivInfo.next();
-                                                                      data.put("11",new Object[]{"School Name:"+univInfo.get("SchoolName").toString()});
-                                                                      data.put("12",new Object[]{"Contact Info:"+univInfo.get("contactInfo").toString()});
-                                                                      data.put("13",new Object[]{"location:"+univInfo.get("location").toString()});
-                                                                      data.put("14",new Object[]{"tutionFees:"+univInfo.get("tutionFees").toString()}); 
+                                                                      data.put(12,new Object[]{"School Name:"+univInfo.get("SchoolName").toString()});
+                                                                      data.put(13,new Object[]{"Contact Info:"+univInfo.get("contactInfo").toString()});
+                                                                      data.put(14,new Object[]{"location:"+univInfo.get("location").toString()});
+                                                                      data.put(15,new Object[]{"tutionFees:"+univInfo.get("tutionFees").toString()}); 
                                                                       System.out.println("department details==="+univInfo.get("department"));
+                                                                      deptInfoXls=(BasicDBList) univInfo.get("department");
+                                                              }
+                                                              int j=16;
+                                                             for(int i=0;i<deptInfoXls.size();i++)
+                                                              {
+                                                            System.out
+																	.println("deptInfoXls.size()"+deptInfoXls.size());
+                                                            DBObject dboXls=(DBObject) deptInfoXls.get(i);
+                                                              data.put(j+1,new Object[]{"Deparment Name:"+dboXls.get("DepartmentName").toString()});
+                                                              data.put(j+2,new Object[]{"GRE Score:"+dboXls.get("grescore").toString()});
+                                                              data.put(j+3,new Object[]{"TOEFL score:"+dboXls.get("toeflscore").toString()});
+                                                              data.put(j+4,new Object[]{"IELTS score:"+dboXls.get("ieltscore").toString()});
+                                                             
+                                                              j=j+4;
+                                                              System.out
+																.println("j=="+j);
                                                               }
                                                              
                                                  //data.put("1",new Object[]{"hi"});
                                                  //data.put("2",new Object[] {"UnivName"});
                                                  
-                                                 Set<String> keyset = data.keySet();
+                                                 Set<Integer> keyset = data.keySet();
                                                  int rownum = 0;
-                                                 for (String key : keyset) {
+                                                 for (Integer key : keyset) {
                                                      Row row = sheet.createRow(rownum++);
                                                      Object [] objArr = data.get(key);
                                                      int cellnum = 0;
@@ -306,6 +324,8 @@ public class UniversityService
                                                               DBObject univInfo = dc_UnivInfo.next();
                                                               uo.setSchoolName(univInfo.get("SchoolName").toString());
                                                               uo.setContactInfo(univInfo.get("contactInfo").toString());
+                                                              System.out
+																	.println("contact info==="+uo.getContactInfo());
                                                               uo.setLocation(univInfo.get("location").toString());
                                                               uo.setTutionFees(Integer.parseInt(univInfo.get("tutionFees").toString()));
                                                          
@@ -313,12 +333,9 @@ public class UniversityService
                                                               System.out.println("univInfo.get"+univInfo.get("department").toString());
                                                               deptInfo=(BasicDBList) univInfo.get("department");
                                                       }
-                                                   ArrayList<DepartmentObject> anita=new ArrayList<DepartmentObject>();
                                                       for(int i=0;i<deptInfo.size();i++)
                                                       {
                                                     	  DepartmentObject dObject=new DepartmentObject();
-                                                    	  System.out
-															.println("dname"+deptInfo.get(i));
                                                     	  DBObject dbo=(DBObject) deptInfo.get(i);
                                                     	  System.out.println("department:"+dbo.get("DepartmentName").toString());
                                                     	  dObject.setDepartmentName(dbo.get("DepartmentName").toString());
