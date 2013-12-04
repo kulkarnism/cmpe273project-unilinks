@@ -50,7 +50,7 @@ slideit()
 
 <div align="center">
 
- <table class="datatable" border="1" cellpadding="5">
+ <table class="table-responsive" border="1" cellpadding="5">
  <#list universityObject as universityObject>
      <tr>
      <th>School Name</th>
@@ -66,7 +66,7 @@ slideit()
   </#list> 
   </table>
   <!--Department table-->
-  <table class="datatable" border="1" cellpadding="5">
+  <table class="table-responsive" border="1" cellpadding="5">
   <tr>
      <th>Department Name</th>
      <th>Toefl Score</th>
