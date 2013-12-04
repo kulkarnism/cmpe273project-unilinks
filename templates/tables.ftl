@@ -127,18 +127,19 @@ background-color:#66CCFF;
   </div>
   <div class="table-responsive" align="center">
   <table id="unilinks" class="table" border="1" cellpadding="5">
- <#list careerDetails as careerDetails>
+ 
      <tr>
      <th>FirstName</th>
      <th>LastName</th>
      <th>Headline</th>
      <th>ProfileURL</th>
-     <tr>
+       <tr>  
+     <#list careerDetails as careerDetails>
      <td>${careerDetails.getFirstName()}</td>
      <td>${careerDetails.getLastName()}</td>
      <td>${careerDetails.getHeadline()}</td>
      <td>${careerDetails.getProfileURL()}</td>         
-    </tr>    
+     </tr> 
   </#list>  
   </div> 
   <div id="chart_div" style="width: 900px; height: 500px;"></div>
