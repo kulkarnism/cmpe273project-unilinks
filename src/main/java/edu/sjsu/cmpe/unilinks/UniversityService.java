@@ -483,9 +483,9 @@ public class UniversityService
                                                             System.out
 																	.println("deptInfoXls.size()"+deptInfoXls.size());
                                                             DBObject dboXls=(DBObject) deptInfoXls.get(i);
-                                                            data.put(j++,new Object[]{" "});
-                                                            data.put(j++,new Object[]{" "});
-                                                            data.put(j++,new Object[]{" "});
+                                                            //data.put(j++,new Object[]{" "});
+                                                            //data.put(j++,new Object[]{" "});
+                                                            //data.put(j++,new Object[]{" "});
                                                            data.put(j++,new Object[]{"Department Details"});
                                                               data.put(j++,new Object[]{"Deparment Name:"+dboXls.get("DepartmentName").toString()});
                                                               data.put(j++,new Object[]{"GRE Score:"+dboXls.get("grescore").toString()});
