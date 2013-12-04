@@ -145,7 +145,7 @@ public class UniversityService
                                       }
                                      else
                                      {                                             
-                                             if(queryParam.contains("SendDetails"))
+                                            /* if(queryParam.contains("SendDetails"))
                                              {
                                                      System.out.println("firstname::"+cd.getFirstName());
                                                      System.out.println("queryParam:"+queryParam.toString());
@@ -234,12 +234,16 @@ public class UniversityService
                                                             System.out
 																	.println("deptInfoXls.size()"+deptInfoXls.size());
                                                             DBObject dboXls=(DBObject) deptInfoXls.get(i);
-                                                              data.put(j+1,new Object[]{"Deparment Name:"+dboXls.get("DepartmentName").toString()});
-                                                              data.put(j+2,new Object[]{"GRE Score:"+dboXls.get("grescore").toString()});
-                                                              data.put(j+3,new Object[]{"TOEFL score:"+dboXls.get("toeflscore").toString()});
-                                                              data.put(j+4,new Object[]{"IELTS score:"+dboXls.get("ieltscore").toString()});
+                                                            data.put(j++,new Object[]{" "});
+                                                            data.put(j++,new Object[]{" "});
+                                                            data.put(j++,new Object[]{" "});
+                                                           data.put(j++,new Object[]{"Department Details"});
+                                                              data.put(j++,new Object[]{"Deparment Name:"+dboXls.get("DepartmentName").toString()});
+                                                              data.put(j++,new Object[]{"GRE Score:"+dboXls.get("grescore").toString()});
+                                                              data.put(j++,new Object[]{"TOEFL score:"+dboXls.get("toeflscore").toString()});
+                                                              data.put(j++,new Object[]{"IELTS score:"+dboXls.get("ieltscore").toString()});
                                                              
-                                                              j=j+4;
+                                                           
                                                               System.out
 																.println("j=="+j);
                                                               }
@@ -297,13 +301,16 @@ public class UniversityService
                                  }
                                  catch(Exception e){System.out.println("exception in universityservice "+e.toString());}                                   
                                                      
-                                             }
+                                             }*/
+                                    	 if(queryParam.contains("submit"))
+                                    	 {
                                              System.out.println(queryParam.substring((queryParam.indexOf("=")+1),queryParam.indexOf("&")));
                                              uname = queryParam.substring((queryParam.indexOf("=")+1),queryParam.indexOf("&"));
                                              String name = uname.replace('+', ' ');
                                              //Assign university name for further use
                                              u_name = name;
-                                             if(queryParam.contains("submit"))
+                                    	 }
+                                             if(queryParam.contains("submit")||queryParam.contains("SendDetails"))
                                              {
                                                                       
                                                                                           
@@ -311,7 +318,7 @@ public class UniversityService
                                               MongoClientURI uri = new MongoClientURI(textUri);                                  
                                                       MongoClient m = new MongoClient(uri);                  
                                                       DB db= m.getDB(uri.getDatabase());
-                                                      BasicDBObject query = new BasicDBObject("SchoolName",name);
+                                                      BasicDBObject query = new BasicDBObject("SchoolName",u_name);
                                                       DBCollection collection = db.getCollection("university");
                                                       DBCollection collection_two = db.getCollection("salary");
                                                       DBCollection collection_univInfo=db.getCollection("univinfo");
@@ -372,7 +379,7 @@ public class UniversityService
                                                       if(dc.count()==0)
                                                       {
                                                               //Publish to administrator that requested uni is not present in database
-                                                              PublishResult pubRes=sns.publish(new PublishRequest(topicArn,"Search for "+name+" has returned null: Data base update needed.","Alert:Unilinks"));
+                                                              PublishResult pubRes=sns.publish(new PublishRequest(topicArn,"Search for "+u_name+" has returned null: Data base update needed.","Alert:Unilinks"));
                                                       }
                                                       while(dc.hasNext())
                                                       {
@@ -394,7 +401,163 @@ public class UniversityService
                                                       }
                                                      
                                                      
+                                              if(queryParam.contains("SendDetails"))
+                                             {
+                                                     System.out.println("firstname::"+cd.getFirstName());
+                                                     System.out.println("queryParam:"+queryParam.toString());
+                                                     String emailid= queryParam.substring((queryParam.indexOf("Z")+2),queryParam.lastIndexOf("&"));
+                                                     emailid=emailid.replace("%40","@");                                                     
                                                      
+                                                     
+                                                     String TO = emailid;
+                                             String FROM = "anita.tvl@gmail.com";
+                                             String BODY = "This is auto generated email..Please do not reply...Please find the university details attached";
+                                             String SUBJECT = "University Details";
+                                             AmazonSimpleEmailService ses = new AmazonSimpleEmailServiceClient(credentials);
+                                            // ses.verifyEmailAddress(new VerifyEmailAddressRequest().withEmailAddress(FROM));
+                                             
+                                             verifyEmailAddress(ses, TO);
+                                             
+                                             Properties props = new Properties();
+                                                      props.setProperty("mail.transport.protocol", "aws");
+                                             props.setProperty("mail.aws.user","AKIAIWJCTBPOCHEYCOYA");
+                                             props.setProperty("mail.aws.password", "7Qc2uMkRE+gQBt3ujQk/KlyKuUgVoKexzPrb6gFE");
+                                             Session session = Session.getInstance(props);
+                                 try {
+                                         
+                                         Message msg = new MimeMessage(session);
+                                                 msg.setFrom(new InternetAddress(FROM));
+                                                 msg.addRecipient(Message.RecipientType.TO, new InternetAddress(TO));
+                                                 msg.setSubject(SUBJECT);
+                                                 //msg.setText(BODY);
+                                                
+                                                 MimeBodyPart messageBodyPart = new MimeBodyPart();
+                                                 messageBodyPart.setText("Hi There,"+"\n"+"Please find attached the detailed information about your requested university."+"\n"+"Happy University Hunt!!!"+"\n\n"+"Best Regards,"+"\n"+"Team Unilinks");                                                
+                                                 Multipart multipart = new MimeMultipart();
+                                                 multipart.addBodyPart(messageBodyPart);
+                                                 messageBodyPart = new MimeBodyPart();                                                
+                                                
+                                                 
+                                                 File attachmentSource = new File("UniversityInfo.xls");
+                                                 attachmentSource.createNewFile();
+                                                 HSSFWorkbook tmpWorkbook = new HSSFWorkbook();
+                                                 HSSFSheet sheet = tmpWorkbook.createSheet("Sample sheet");
+                                                 tmpWorkbook.write(new FileOutputStream(attachmentSource));
+                                                 Map<Integer, Object[]> data = new HashMap<Integer, Object[]>();
+                                                 
+                                                 //Get Salary Data From Database
+                                                  String textUri = "mongodb://unilinks:unilinks@ds053818.mongolab.com:53818/unilinks";
+                                                      MongoClientURI uri = new MongoClientURI(textUri);                                  
+                                                              MongoClient m = new MongoClient(uri);                  
+                                                              DB db= m.getDB(uri.getDatabase());
+                                                              System.out.println("university name::"+u_name);
+                                                              BasicDBObject query = new BasicDBObject("SchoolName",u_name);                                                              
+                                                              DBCollection collection_two = db.getCollection("salary");
+                                                              DBCursor dc_two = collection_two.find(query);
+                                                              //get university data from database
+                                                              DBCollection collection_univInfo=db.getCollection("univinfo");
+                                                              DBCursor dc_UnivInfo = collection_univInfo.find(query);
+                                                              
+                                                              data.put(1,new Object[]{"Salary Details"});
+                                                              while(dc_two.hasNext())
+                                                              {
+                                                                      DBObject secondary = dc_two.next();
+                                                                      data.put(2,new Object[]{"Computer Engineering(2011-12)::"+secondary.get("CE").toString()});
+                                                                      data.put(3,new Object[]{"Computer Engineering(2012-13)::"+secondary.get("CE2").toString()});
+                                                                      data.put(4,new Object[]{"Software Engineering(2011-12)::"+secondary.get("SE").toString()});
+                                                                      data.put(5,new Object[]{"Software Engineering(2012-13)::"+secondary.get("SE2").toString()});
+                                                                      data.put(6,new Object[]{"Mechanical Engineering(2011-12)::"+secondary.get("ME").toString()});
+                                                                      data.put(7,new Object[]{"Mechanical Engineering(2012-13)::"+secondary.get("ME2").toString()});                                                                      
+                                                                      data.put(8,new Object[]{"Chemical Engineering(2011-12)::"+secondary.get("CHE").toString()});
+                                                                      data.put(9,new Object[]{"Chemical Engineering(2012-13)::"+secondary.get("CHE2").toString()});
+                                                                      data.put(10,new Object[]{"Civil Engineering(2011-12)::"+secondary.get("CVE").toString()});
+                                                                      data.put(11,new Object[]{"Civil Engineering(2012-13)::"+secondary.get("CVE2").toString()});
+                                                              }
+                                                              BasicDBList deptInfoXls=new BasicDBList();
+                                                              while(dc_UnivInfo.hasNext())
+                                                              {
+                                                                      DBObject univInfo = dc_UnivInfo.next();
+                                                                      data.put(12,new Object[]{"School Name:"+univInfo.get("SchoolName").toString()});
+                                                                      data.put(13,new Object[]{"Contact Info:"+univInfo.get("contactInfo").toString()});
+                                                                      data.put(14,new Object[]{"location:"+univInfo.get("location").toString()});
+                                                                      data.put(15,new Object[]{"tutionFees:"+univInfo.get("tutionFees").toString()}); 
+                                                                      System.out.println("department details==="+univInfo.get("department"));
+                                                                      deptInfoXls=(BasicDBList) univInfo.get("department");
+                                                              }
+                                                              int j=16;
+                                                             for(int i=0;i<deptInfoXls.size();i++)
+                                                              {
+                                                            System.out
+																	.println("deptInfoXls.size()"+deptInfoXls.size());
+                                                            DBObject dboXls=(DBObject) deptInfoXls.get(i);
+                                                            data.put(j++,new Object[]{" "});
+                                                            data.put(j++,new Object[]{" "});
+                                                            data.put(j++,new Object[]{" "});
+                                                           data.put(j++,new Object[]{"Department Details"});
+                                                              data.put(j++,new Object[]{"Deparment Name:"+dboXls.get("DepartmentName").toString()});
+                                                              data.put(j++,new Object[]{"GRE Score:"+dboXls.get("grescore").toString()});
+                                                              data.put(j++,new Object[]{"TOEFL score:"+dboXls.get("toeflscore").toString()});
+                                                              data.put(j++,new Object[]{"IELTS score:"+dboXls.get("ieltscore").toString()});
+                                                             
+                                                           
+                                                              System.out
+																.println("j=="+j);
+                                                              }
+                                                             
+                                                 //data.put("1",new Object[]{"hi"});
+                                                 //data.put("2",new Object[] {"UnivName"});
+                                                 
+                                                 Set<Integer> keyset = data.keySet();
+                                                 int rownum = 0;
+                                                 for (Integer key : keyset) {
+                                                     Row row = sheet.createRow(rownum++);
+                                                     Object [] objArr = data.get(key);
+                                                     int cellnum = 0;
+                                                     for (Object obj : objArr) {
+                                                         Cell cell = row.createCell(cellnum++);
+                                                         if(obj instanceof Date) 
+                                                             cell.setCellValue((Date)obj);
+                                                         else if(obj instanceof Boolean)
+                                                             cell.setCellValue((Boolean)obj);
+                                                         else if(obj instanceof String)
+                                                             cell.setCellValue((String)obj);
+                                                         else if(obj instanceof Double)
+                                                             cell.setCellValue((Double)obj);
+                                                     }
+                                                 }
+                                                 try {
+                                                            FileOutputStream out = 
+                                                                    new FileOutputStream(attachmentSource);
+                                                            tmpWorkbook.write(out);
+                                                            out.close();
+                                                            System.out.println("Excel written successfully..");
+                                                             
+                                                        } catch (FileNotFoundException e) {
+                                                            e.printStackTrace();
+                                                        } catch (IOException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                 
+                                                 
+                                                 DataSource source = new FileDataSource(attachmentSource);
+                                                 messageBodyPart.setDataHandler(new DataHandler(source));
+                                                 messageBodyPart.setFileName(attachmentSource.getName());
+                                                 
+                                                 multipart.addBodyPart(messageBodyPart);
+                                                 msg.setContent(multipart);
+                                                 msg.saveChanges();
+                                         
+                                                 Transport t = new AWSJavaMailTransport(session, null);
+                                                 t.connect();
+                                                 t.sendMessage(msg, null);
+
+                                                 // Close your transport when you're completely done sending
+                                                 // all your messages
+                                                 t.close();
+                                 }
+                                 catch(Exception e){System.out.println("exception in universityservice "+e.toString());}                                   
+                                                     
+                                             }
                                                      
                                                      
                                                             /* Mongo mongo = new Mongo("localhost", 27017);
@@ -485,12 +648,17 @@ public class UniversityService
             }
         
          private static void verifyEmailAddress(AmazonSimpleEmailService ses, String address) {
+        	 try{
                 ListVerifiedEmailAddressesResult verifiedEmails = ses.listVerifiedEmailAddresses();
                 if (verifiedEmails.getVerifiedEmailAddresses().contains(address)) return;
 
                 ses.verifyEmailAddress(new VerifyEmailAddressRequest().withEmailAddress(address));
                 System.out.println("Please check the email address " + address + " to verify it");
-                System.exit(0);
+        	 }
+        	 catch(Exception e)
+        	 {
+        		 System.out.println("verify email address and try again");
+        	 }
             }
 }
 
