@@ -86,7 +86,7 @@ public class UniversityService
                 //Amazon SNS Subscription
                 final AWSCredentials credentials = new BasicAWSCredentials("AKIAIWJCTBPOCHEYCOYA", "7Qc2uMkRE+gQBt3ujQk/KlyKuUgVoKexzPrb6gFE");
                 final AmazonSNS sns = new AmazonSNSClient(credentials);        
-                final CareerDetails cd =  new CareerDetails();
+               // final CareerDetails cd =  new CareerDetails();
         final SalaryDetails sd = new SalaryDetails();
         final UniversityObject uo= new UniversityObject();
         //final DepartmentObject dObject=new DepartmentObject();
@@ -378,7 +378,7 @@ public class UniversityService
                                                       {
                                                              DBObject primary = dc.next();
                                                              
-                                                             
+                                                             CareerDetails cd =  new CareerDetails();
                                                              cd.setFirstName(primary.get("firstName").toString());
                                                              
                                                              cd.setLastName(primary.get("lastName").toString());
@@ -396,8 +396,8 @@ public class UniversityService
                                                      
                                               if(queryParam.contains("SendDetails"))
                                              {
-                                                     System.out.println("firstname::"+cd.getFirstName());
-                                                     System.out.println("queryParam:"+queryParam.toString());
+                                                    // System.out.println("firstname::"+cd.getFirstName());
+                                                    // System.out.println("queryParam:"+queryParam.toString());
                                                      String emailid= queryParam.substring((queryParam.indexOf("Z")+2),queryParam.lastIndexOf("&"));
                                                      emailid=emailid.replace("%40","@");                                                     
                                                      
@@ -444,7 +444,7 @@ public class UniversityService
                                                               MongoClient m = new MongoClient(uri);                  
                                                               DB db= m.getDB(uri.getDatabase());
                                                               System.out.println("university name::"+u_name);
-                                                              BasicDBObject query = new BasicDBObject("SchoolName",u_name);                                                              
+                                                              BasicDBObject query = new BasicDBObject("SchoolName", new BasicDBObject("$regex", u_name).append("$options", "i"));                                                             
                                                               DBCollection collection_two = db.getCollection("salary");
                                                               DBCursor dc_two = collection_two.find(query);
                                                               //get university data from database
