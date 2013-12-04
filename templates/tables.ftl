@@ -18,7 +18,7 @@ image3.src="http://oi43.tinypic.com/316s29g.jpg";
 function slideit(){
 //if browser does not support the image object, exit.
 if (!document.images)
-return
+return	
 document.images.slide1.src=eval("image"+step+".src")
 if (step<3)
 step++
