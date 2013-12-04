@@ -109,7 +109,7 @@ public class UniversityService
                 System.out.println("topic ARN==="+topicResult.getTopicArn());
                 
                 //create a subscription
-                SubscribeResult subRes=sns.subscribe(new SubscribeRequest(topicResult.getTopicArn(),"email","anita.tvl@gmail.com"));
+                SubscribeResult subRes=sns.subscribe(new SubscribeRequest(topicResult.getTopicArn(),"email","unilinks2013@gmail.com"));
                                
                 try{
                         
@@ -410,7 +410,7 @@ public class UniversityService
                                                      
                                                      
                                                      String TO = emailid;
-                                             String FROM = "anita.tvl@gmail.com";
+                                             String FROM = "unilinks2013@gmail.com";
                                              String BODY = "This is auto generated email..Please do not reply...Please find the university details attached";
                                              String SUBJECT = "University Details";
                                              AmazonSimpleEmailService ses = new AmazonSimpleEmailServiceClient(credentials);
