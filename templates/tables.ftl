@@ -1,10 +1,7 @@
 <#include "./header.ftl"> 
 
 <body><div class="background">
- 			<!--added CSS-->
-            <link rel="stylesheet" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" media="screen">
-            <link href="//bootswatch.com/cerulean/bootstrap.min.css" rel="stylesheet">
-           
+ 			
            <!--script for slideshow-->
            
 			<script>
@@ -45,9 +42,39 @@ slide2it()
 			</script>
             
             
-            
-         
-            
+     <!--adding some style to tables -->
+     <style>
+#unilinks
+{
+font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+width:100%;
+border-collapse:collapse;
+}
+#unilinks td, #unilinks th 
+{
+font-size:1em;
+border:1px solid #98bf21;
+padding:3px 7px 2px 7px;
+}
+#unilinks th 
+{
+font-size:1.1em;
+text-align:left;
+padding-top:5px;
+padding-bottom:4px;
+background-color:#0066CC;
+color:#ffffff;
+}
+#unilinks tr.alt td 
+{
+color:#000000;
+background-color:#66CCFF;
+}
+     </style>       
+         <!--added CSS-->
+            <link rel="stylesheet" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" media="screen">
+            <link href="//bootswatch.com/cerulean/bootstrap.min.css" rel="stylesheet">
+              
             
             
 <#if container??>
@@ -61,10 +88,9 @@ slide2it()
 <#if careerDetails?has_content>
 <h1><div align="center">Details of University</div></h1>
 <div ="input page">
+<div class="table-responsive" align="center">
 
-<div align="center">
-
- <table class="table-responsive" border="1" cellpadding="5">
+<table id="unilinks" class="table" border="1" cellpadding="5">
  <#list universityObject as universityObject>
      <tr>
      <th>School Name</th>
@@ -79,8 +105,10 @@ slide2it()
     </tr>    
   </#list> 
   </table>
+  </div>
   <!--Department table-->
-  <table class="table-responsive" border="1" cellpadding="5">
+  <div class="table-responsive" align="center">
+  <table id="unilinks" class="table" border="1" cellpadding="5">
   <tr>
      <th>Department Name</th>
      <th>Toefl Score</th>
@@ -96,8 +124,9 @@ slide2it()
     </tr>    
   </#list> 
   </table>
+  </div>
   <div class="table-responsive" align="center">
-  <table class="datatable" border="1" cellpadding="5">
+  <table id="unilinks" class="table" border="1" cellpadding="5">
  <#list careerDetails as careerDetails>
      <tr>
      <th>FirstName</th>
