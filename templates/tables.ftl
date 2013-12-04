@@ -19,7 +19,7 @@ function slideit(){
 //if browser does not support the image object, exit.
 if (!document.images)
 return
-document.images.slide.src=eval("image"+step+".src")
+document.images.slide1.src=eval("image"+step+".src")
 if (step<3)
 step++
 else
@@ -27,7 +27,21 @@ step=1
 //call function "slideit()" every 2.5 seconds
 setTimeout("slideit()",5000)
 }
+
+function slide2it(){
+//if browser does not support the image object, exit.
+if (!document.images)
+return
+document.images.slide2.src=eval("image"+step+".src")
+if (step<3)
+step++
+else
+step=1
+
+setTimeout("slide2it()",5000)
+}
 slideit()
+slide2it()
 			</script>
             
             
@@ -100,7 +114,7 @@ slideit()
   </div> 
   <div id="chart_div" style="width: 900px; height: 500px;"></div>
   </table> 
-  <table class="datatable" border="1" cellpadding="5">
+  <table class="datatable" border="1" cellpadding="5" style="display:none">
   <#list salaryDetails as salaryDetails>
   <tr>
   <td id="one">${salaryDetails.getA()}</td>
@@ -125,13 +139,14 @@ slideit()
 <#else>
 
 <!--this can be removed later if not required-->
-<div ="images" align="right">
-<img id="img" name="slide" src="https://www.realmagnet.com/wp-content/uploads/2011/10/San-Jose-State-University.png" height="37" width="236" border="0px"/></div>
+<div ="images">
+<img id="img1" align="right" name="slide1" src="https://www.realmagnet.com/wp-content/uploads/2011/10/San-Jose-State-University.png" height="37" width="236" border="0px"/>
+<img id="img2" align="left" name="slide2" src="https://www.realmagnet.com/wp-content/uploads/2011/10/San-Jose-State-University.png" height="37" width="236" border="0px"/>
 </div>
 
 
 <div align="center"><img src="http://i41.tinypic.com/v5dao7.png"/></div></h1></font></div>
-<h3><div align ="center">All University Statics at One Click</div></h3>
+<h3><div align ="center">Your One Stop Destination for University Search</div></h3>
 <h3><div align ="center">Enter the name or part of the name of the university you are looking for</div></h3>
 <div align="center"><input type="text" name="searchText" /> <br/><br/>
 <input type="submit" value="Search" name="submit" />
