@@ -22,6 +22,7 @@ import spark.Route;
 import spark.Request;
 import spark.Response;
 
+
 //import java.io.FileWriter;
 //import java.io.FileWriter;
 //import java.io.OutputStreamWriter;
@@ -308,10 +309,12 @@ public class UniversityService
                                               MongoClientURI uri = new MongoClientURI(textUri);                                  
                                                       MongoClient m = new MongoClient(uri);                  
                                                       DB db= m.getDB(uri.getDatabase());
-                                                      BasicDBObject query = new BasicDBObject("SchoolName",u_name);
+                                                     // BasicDBObject query = new BasicDBObject("SchoolName",u_name);
+                                                      BasicDBObject query = new BasicDBObject("SchoolName", new BasicDBObject("$regex", u_name).append("$options", "i"));
                                                       DBCollection collection = db.getCollection("university");
                                                       DBCollection collection_two = db.getCollection("salary");
                                                       DBCollection collection_univInfo=db.getCollection("univinfo");
+                                                      
                                                       //cursor for findign university data
                                                       DBCursor dc_UnivInfo = collection_univInfo.find(query);
                                                       System.out.println("dc_UnivInfo=="+dc_UnivInfo);
