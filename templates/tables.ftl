@@ -9,11 +9,11 @@
            
 			<script>
  var image1=new Image()
-image1.src="http://collegefootballzealots.com/images/stories/SJSU%20Logo.gif";
+image1.src="http://oi44.tinypic.com/2iqj345.jpg";
 var image2=new Image()
-image2.src="http://www.public.asu.edu/~pturaga/images/asu-logo.jpg";
+image2.src="http://oi41.tinypic.com/2n1gshv.jpg";
 var image3=new Image()
-image3.src="http://www.harvard.edu/sites/default/files/user13/harvard_shield_wreath.png";
+image3.src="http://oi43.tinypic.com/316s29g.jpg";
       var step=1
 function slideit(){
 //if browser does not support the image object, exit.
