@@ -53,7 +53,7 @@ border-collapse:collapse;
 #unilinks td, #unilinks th 
 {
 font-size:1em;
-border:1px solid #98bf21;
+border:1px solid #000000;
 padding:3px 7px 2px 7px;
 }
 #unilinks th 
@@ -161,6 +161,7 @@ background-color:#66CCFF;
   </table> 
   <br/>
   <br/>
+  <h3>Enter Email Address</h3>
   <input type="text" name="sendEmailZ" /> <br/><br/>
   <input type="submit" value="SendDetails" name="details" />
   
