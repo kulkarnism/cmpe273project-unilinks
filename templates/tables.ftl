@@ -2,45 +2,6 @@
 
 <body><div class="background">
  			
-           <!--script for slideshow-->
-           
-			<script>
- var image1=new Image()
-image1.src="http://oi44.tinypic.com/2iqj345.jpg";
-var image2=new Image()
-image2.src="http://oi41.tinypic.com/2n1gshv.jpg";
-var image3=new Image()
-image3.src="http://oi43.tinypic.com/316s29g.jpg";
-      var step=1
-function slideit(){
-//if browser does not support the image object, exit.
-if (!document.images)
-return	
-document.images.slide1.src=eval("image"+step+".src")
-if (step<3)
-step++
-else
-step=1
-//call function "slideit()" every 2.5 seconds
-setTimeout("slideit()",5000)
-}
-
-function slide2it(){
-//if browser does not support the image object, exit.
-if (!document.images)
-return
-document.images.slide2.src=eval("image"+step+".src")
-if (step<3)
-step++
-else
-step=1
-
-setTimeout("slide2it()",5000)
-}
-slideit()
-slide2it()
-			</script>
-            
             
      <!--adding some style to tables -->
      <style>
@@ -53,7 +14,7 @@ border-collapse:collapse;
 #unilinks td, #unilinks th 
 {
 font-size:1em;
-border:1px solid #000000;
+border:1px solid #98bf21;
 padding:3px 7px 2px 7px;
 }
 #unilinks th 
@@ -125,25 +86,39 @@ background-color:#66CCFF;
   </#list> 
   </table>
   </div>
+
+    <div align="center">
+  <img src="http://oi41.tinypic.com/2r4rcba.jpg"/>
+  </div>
+    <h3 align="center">University Salary Average</h3>
+    <div align="center">
+  <div id="chart_div" style="width: 900px; height: 500px;"></div> 
+  </div>
+    <div align="center">
+  <img src="http://oi41.tinypic.com/2r4rcba.jpg"/>
+  </div>
+  <h3 align="center">Placement Information from LinkedIn</h3>
   <div class="table-responsive" align="center">
   <table id="unilinks" class="table" border="1" cellpadding="5">
- 
      <tr>
      <th>FirstName</th>
      <th>LastName</th>
      <th>Headline</th>
      <th>ProfileURL</th>
-       <tr>  
+     <tr>
      <#list careerDetails as careerDetails>
      <td>${careerDetails.getFirstName()}</td>
      <td>${careerDetails.getLastName()}</td>
      <td>${careerDetails.getHeadline()}</td>
      <td>${careerDetails.getProfileURL()}</td>         
-     </tr> 
+    </tr>    
   </#list>  
   </div> 
-  <div id="chart_div" style="width: 900px; height: 500px;"></div>
-  </table> 
+   
+ 
+    </table>
+   
+ 
   <table class="datatable" border="1" cellpadding="5" style="display:none">
   <#list salaryDetails as salaryDetails>
   <tr>
@@ -162,23 +137,51 @@ background-color:#66CCFF;
   </table> 
   <br/>
   <br/>
-  <h3>Enter Email Address</h3>
+  <div>
+  <img src="http://oi41.tinypic.com/2r4rcba.jpg"/>
+  </div>
+  <h3 align="center">Want these College Details? Enter your Email ID</h3>
   <input type="text" name="sendEmailZ" /> <br/><br/>
   <input type="submit" value="SendDetails" name="details" />
   
 </div>
 <#else>
 
-<!--this can be removed later if not required-->
-<div ="images">
-<img id="img1" align="right" name="slide1" src="https://www.realmagnet.com/wp-content/uploads/2011/10/San-Jose-State-University.png" height="37" width="236" border="0px"/>
-<img id="img2" align="left" name="slide2" src="https://www.realmagnet.com/wp-content/uploads/2011/10/San-Jose-State-University.png" height="37" width="236" border="0px"/>
+
+
+<div align="left">
+</marquee>
+<marquee  bgcolor="#3333FF" behavior="scroll" direction="left" scroll="continuous" onmouseover="this.stop();" onmouseout="this.start();">
+<img src="http://i39.tinypic.com/o7r71d.jpg"/>
+<img src="http://i40.tinypic.com/dfiiw.jpg"/>
+<img src="http://i43.tinypic.com/i5cfuw.jpg"/>
+<img src="http://i44.tinypic.com/1znv91z.jpg"/>
+<img src="http://i39.tinypic.com/1kn7r.jpg"/>
+<img src="http://i42.tinypic.com/29wn3b6.jpg"/>
+<img src="http://i43.tinypic.com/w7bngm.jpg"/>
+<img src="http://i43.tinypic.com/wa4vmu.jpg"/>
+<img src="http://i39.tinypic.com/ojl5e0.jpg"/>
+<img src="http://i44.tinypic.com/n3b70p.jpg"/>
+<img src="http://i41.tinypic.com/vsp45d.jpg"/>
+<img src="http://i40.tinypic.com/b3kjuo.jpg"/>
+<img src="http://i39.tinypic.com/2isbi9c.jpg"/>
+<img src="http://i41.tinypic.com/2zqh6yt.jpg"/>
+<img src="http://i39.tinypic.com/2vtabsw.jpg"/>
+<img src="http://i41.tinypic.com/10fbytf.jpg"/>
+<img src="http://i39.tinypic.com/2a6s5c6.jpg"/>
+<img src="http://i41.tinypic.com/3359x10.jpg"/>
+<img src="http://i40.tinypic.com/10ftmk7.jpg"/>
+<img src="http://i40.tinypic.com/149weag.jpg"/>
+<img src="http://i43.tinypic.com/2wnxunm.jpg"/>
+<img src="http://i39.tinypic.com/2zjcs4w.jpg"/>
+<img src="http://i41.tinypic.com/2cs7y86.jpg"/>
+<img src="http://i42.tinypic.com/5kfrm8.jpg"/>
+</marquee>
 </div>
-
-
+<hr color="black" size="1000">
 <div align="center"><img src="http://i41.tinypic.com/v5dao7.png"/></div></h1></font></div>
 <h3><div align ="center">Your One Stop Destination for University Search</div></h3>
-<h3><div align ="center">Enter the name or part of the name of the university you are looking for</div></h3>
+<h3><div align ="center">Enter the name of the university you are looking for</div></h3>
 <div align="center"><input type="text" name="searchText" /> <br/><br/>
 <input type="submit" value="Search" name="submit" />
 <br/>
@@ -214,7 +217,7 @@ var vten= parseInt(document.getElementById("ten").textContent);
         ]);
 
         var options = {
-          title: 'University Salary Average',
+          
           vAxis: {title: 'Graduate Department',  titleTextStyle: {color: 'red'}}
         };
 
