@@ -319,6 +319,9 @@ public class UniversityService
                                                       DBCursor dc_UnivInfo = collection_univInfo.find(query);
                                                       System.out.println("dc_UnivInfo=="+dc_UnivInfo);
                                                       BasicDBList deptInfo=new BasicDBList();
+                                                    System.out
+															.println("dc_UnivInfo=="+dc_UnivInfo.size());
+                                                    
                                                       while(dc_UnivInfo.hasNext())
                                                       {
                                                               DBObject univInfo = dc_UnivInfo.next();
@@ -390,10 +393,20 @@ public class UniversityService
                                                             
                                                              careerDetails.add(cd);                                                                     
                                                      }
+                                                      //for error handling template
+                                                      if(dc_UnivInfo.size()==0 ||dc.size()==0)
+                                                      {
+                                                    	  file = new StringWriter();
+                                                          cfg.setDirectoryForTemplateLoading(new File("templates"));
+                                                      // load template
+                                                      Template errTemplate = cfg.getTemplate("errorMessage.ftl"); 
+                                                   	      
+                                                      errTemplate.process(input, file);
+                                                      }
                                                              
                                                       }
                                                      
-                                                     
+                                             
                                               if(queryParam.contains("SendDetails"))
                                              {
                                                     // System.out.println("firstname::"+cd.getFirstName());
@@ -622,9 +635,9 @@ public class UniversityService
                                                      input.put("salaryDetails",salaryDetails);
                                                      input.put("careerDetails",careerDetails);
                                                      input.put("departmentObject",departmentObject);
-                                         template.process(input, file);
-                                         
-                                         
+                                                    
+                                                  	   template.process(input, file);
+                                                    
                                              }
                                      
                                   
