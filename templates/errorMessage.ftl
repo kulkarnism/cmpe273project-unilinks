@@ -45,7 +45,7 @@ University not available...Administrator Notified ...Keep Checking !!!
  <br>
  <div align="center">
 
- <button onclick="location.href='http://localhost:4567/unilinks'">
+ <button onclick="location.href='ec2-54-193-20-37.us-west-1.compute.amazonaws.com:4567/unilinks'">
     <input type="submit" value="GoBack">
 </button>
  </div>
