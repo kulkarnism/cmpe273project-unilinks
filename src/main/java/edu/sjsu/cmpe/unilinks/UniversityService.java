@@ -84,7 +84,7 @@ public class UniversityService
         public static void main(String[] args) throws Exception
             { 
                 //Amazon SNS Subscription
-                final AWSCredentials credentials = new BasicAWSCredentials("AKIAIWJCTBPOCHEYCOYA", "7Qc2uMkRE+gQBt3ujQk/KlyKuUgVoKexzPrb6gFE");
+                final AWSCredentials credentials = new BasicAWSCredentials("xxx", "7Qc2uMkRE+/KlyKuUgVoKexzPrb6gFE");
                 final AmazonSNS sns = new AmazonSNSClient(credentials);        
                // final CareerDetails cd =  new CareerDetails();
         final SalaryDetails sd = new SalaryDetails();
@@ -270,8 +270,8 @@ public class UniversityService
                                              
                                              Properties props = new Properties();
                                                       props.setProperty("mail.transport.protocol", "aws");
-                                             props.setProperty("mail.aws.user","AKIAIWJCTBPOCHEYCOYA");
-                                             props.setProperty("mail.aws.password", "7Qc2uMkRE+gQBt3ujQk/KlyKuUgVoKexzPrb6gFE");
+                                             props.setProperty("mail.aws.user","xxx");
+                                             props.setProperty("mail.aws.password", "7Qc2uMkRE+/KlyKuUgVoKexzPrb6gFE");
                                              Session session = Session.getInstance(props);
                                  try {
                                          
